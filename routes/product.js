@@ -14,8 +14,5 @@ routerProduct.delete('/products/:id', (req, res) => {
     res.send(`delete product ${req.params.id}`);
 });
 
-routerProduct.put('/products/:id', (req, res) => {
-    res.send('put product');
-});
 
 module.exports = routerProduct;
