@@ -1,0 +1,14 @@
+GET http://localhost:4000/api/products/
+
+###
+
+POST http://localhost:4000/api/products/
+content-type : application/json
+
+{
+    "name":"hung",
+    "price":12,
+    "description":"mo ta abc",
+    "image":"hung.jpg",
+    "shipping":true
+}

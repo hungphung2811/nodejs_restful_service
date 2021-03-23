@@ -10,33 +10,32 @@ const productSchema = new mongoose.Schema({
         required: true,
         maxLength: 32
     },
-    image:{
-        type: String,
-        required: true,
-        maxLength: 100
+    photo: {
+        data: Buffer,
+        contentType: String
     },
-    price:{
-        type:Number,
+    price: {
+        type: Number,
         required: true,
         trim: true,
-        maxLength:32
+        maxLength: 32
     },
-    quantity:{
-        type:Number
+    quantity: {
+        type: Number
     },
-    sold:{
-        type:Number,
-        default:0
+    sold: {
+        type: Number,
+        default: 0
     },
-    shipping:{
+    shipping: {
         required: true,
-        type:Boolean
+        type: Boolean
     },
     description: {
         type: String,
         required: true,
-        maxLength:2000
+        maxLength: 2000
     }
-},{timestamps:true})
+}, { timestamps: true })
 
-module.exports = mongoose.model('Product',productSchema);
+module.exports = mongoose.model('Product', productSchema);

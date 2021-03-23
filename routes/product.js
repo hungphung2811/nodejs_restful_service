@@ -1,15 +1,19 @@
 import express from 'express';
-import { createProduct, deleteProduct, getListProduct, updateProduct } from '../controllers/product';
+import { createProduct, deleteProduct, getListProduct, getOneProduct, productById, updateProduct } from '../controllers/product';
 
 const routerProduct = express.Router();
 
+routerProduct.param('productId', productById);
+
 routerProduct.get('/products', getListProduct);
 
-routerProduct.post('/products', createProduct);
+routerProduct.get('/product/:productId',getOneProduct);
 
-routerProduct.delete('/products/:id', deleteProduct);
+routerProduct.post('/product', createProduct);
 
-routerProduct.put('/products/:id', updateProduct);
+routerProduct.delete('/product/:productId', deleteProduct);
+
+routerProduct.put('/product/:productId', updateProduct);
 
 
 module.exports = routerProduct;
