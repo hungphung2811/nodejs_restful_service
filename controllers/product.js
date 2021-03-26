@@ -1,6 +1,7 @@
-import Product from '../models/product';
 import formidable from 'formidable';
 import fs from 'fs';
+import Product from '../models/product';
+import _ from "lodash";
 
 // /:id => id
 export const productById = (req, res, next, id) => {
@@ -57,9 +58,14 @@ export const createProduct = (req, res) => {
 
 // [GET] /products
 export const getListProduct = (req, res, next) => {
-    Product.find({})
-        .then((products) => res.json(products))
-        .catch((error) => next(error))
+    Product.find((err, data) => {
+        if (err) {
+            return res.status(400).json({
+                error: "khong tim thay san pham"
+            })
+        }
+        res.json(data);
+    })
 }
 
 // [GET] /product/:productId
