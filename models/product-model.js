@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-// const ObjectId = Schema.ObjectId;
+const { ObjectId } = mongoose.Schema;
 
 const productSchema = new mongoose.Schema({
     // id: ObjectId,
@@ -35,6 +35,11 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true,
         maxLength: 2000
+    },
+    categoryId:{
+        type: ObjectId,
+        required: true,
+        ref: 'Category'
     }
 }, { timestamps: true })
 

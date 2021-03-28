@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
 import morgan from 'morgan';
-import productRoutes from './routes/product.js';
+import router from './routes/';
 import bodyParser from 'body-parser';
 
 const app = express();
@@ -16,14 +16,15 @@ mongoose.connect(process.env.MONGODB_URI, {
     useUnifiedTopology: true,
     useFindAndModify: false,
     useCreateIndex: true
-}).then(() => console.log('connected'));
+}).then(() => console.log('connected'))
+.catch(err => console.log('error',err));
 
 mongoose.connection.on('error', (err) => {
     console.log(`error ${err.message}`)
 });
 
 //  routes
-app.use('/api', productRoutes);
+router(app);
 
 const port = process.env.PORT || 8000
 app.listen(port, () => {
