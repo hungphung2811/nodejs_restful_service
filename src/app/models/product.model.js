@@ -20,23 +20,26 @@ const productSchema = new mongoose.Schema({
         trim: true,
         maxLength: 32
     },
-    quantity: {
-        type: Number
-    },
-    sold: {
-        type: Number,
+    sale:{
+        type:Number,
+        trim:true,
         default: 0
     },
-    shipping: {
-        required: true,
-        type: Boolean
+    status:{
+        type:Boolean,
+        default: true
+    },
+    quantity: {
+        type: Number,
+        trim: true
     },
     description: {
         type: String,
         required: true,
+        trim: true,
         maxLength: 2000
     },
-    categoryId:{
+    categoryId: {
         type: ObjectId,
         required: true,
         ref: 'Category'

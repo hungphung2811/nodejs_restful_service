@@ -1,50 +1,51 @@
 import formidable from 'formidable';
 import fs from 'fs';
-import Product from '../models/product-model';
+import Category from '../models/category.model';
 import _ from "lodash";
 
-// @get id  - /:id => id
-export const productById = (req, res, next, id) => {
-    Product.findById(id).exec((err, product) => {
-        if (err || !product) {
+// /:id => id
+export const categoryById = (req, res, next, id) => {
+    Category.findById(id).exec((err, category) => {
+        if (err || !category) {
             return res.status(400).json(
                 { error: "khong tim thay san pham" }
             )
         }
-        req.product = product;
+        req.category = category;
         next();
     })
 }
 
-// @create product [POST] /products
-export const createProduct = (req, res) => {
+// [POST] /category
+export const createCategory = (req, res) => {
+    console.log('them moi category');
     let form = new formidable.IncomingForm();
     form.keepExtensions = true;
     form.parse(req, (err, filds, files) => {
         if (err) {
             return res.status(400).json({
-                error: "them san pham khong thanh cong"
+                error: "them category khong thanh cong"
             })
         }
 
-        const { name, description, price } = filds;
-        if (!name || !description || !price) {
+        const { name, description } = filds;
+        if (!name || !description) {
             return res.status(400).json({
                 error: "Bạn cần nhập đầy đủ các trường"
             })
         }
 
-        const product = new Product(filds);
+        const category = new Category(filds);
         if (files.photo) {
             if (files.photo.size > 1000000) {
                 return res.status(400).json({
                     error: "Bạn nên upload ảnh dưới 1mb"
                 })
             }
-            product.photo.data = fs.readFileSync(files.photo.path);
-            product.photo.contentType = files.photo.type;
+            category.photo.data = fs.readFileSync(files.photo.path);
+            category.photo.contentType = files.photo.type;
         }
-        product.save((err, data) => {
+        category.save((err, data) => {
             if (err) {
                 return res.status(400).json({
                     error: "khoong them dc san pham"
@@ -55,25 +56,26 @@ export const createProduct = (req, res) => {
     });
 }
 
-// @getAll products - [GET] /products
-export const getListProduct = (req, res, next) => {
-    Product.find((err, data) => {
+// [GET] /category
+export const getListCategory = (req, res) => {
+    console.log('list category');
+    Category.find((err, data) => {
         if (err) {
             return res.status(400).json({
-                error: "khong tim thay san pham"
+                error: "khong tim thay category"
             })
         }
         res.json(data);
     })
 }
 
-// @getOne product - [GET] /products/:productId
-export const getOneProduct = (req, res) => {
-    return res.json(req.product);
+// [GET] /category/:categoryId
+export const getOneCategory = (req, res) => {
+    return res.json(req.category);
 }
 
-// @update product - [UPDATE] /products/:productId
-export const updateProduct = (req, res) => {
+// [UPDATE] /category/:categoryId
+export const updateCategory = (req, res) => {
     let form = new formidable.IncomingForm();
     form.keepExtensions = true;
     form.parse(req, (err, filds, files) => {
@@ -82,28 +84,28 @@ export const updateProduct = (req, res) => {
                 error: "sua san pham khong thanh cong"
             })
         }
-        const { name, description, price } = filds;
-        if (!name || !description || !price) {
+        const { name, description} = filds;
+        if (!name || !description) {
             return res.status(400).json({
                 error: "Bạn cần nhập đầy đủ các trường"
             })
         }
 
-        let product = req.product;
-        product= _.assignIn(product,filds)
+        let category = req.category;
+        category = _.assignIn(category, filds)
         if (files.photo) {
             if (files.photo.size > 1000000) {
                 return res.status(400).json({
                     error: "Bạn nên upload ảnh dưới 1mb"
                 })
             }
-            product.photo.data = fs.readFileSync(files.photo.path);
-            product.photo.contentType = files.photo.type;
+            category.photo.data = fs.readFileSync(files.photo.path);
+            category.photo.contentType = files.photo.type;
         }
-        product.save((err, data) => {
+        category.save((err, data) => {
             if (err) {
                 return res.status(400).json({
-                    error: "khoong them dc san pham"
+                    error: "khoong them dc category"
                 })
             }
             res.json(data)
@@ -111,15 +113,15 @@ export const updateProduct = (req, res) => {
     });
 }
 
-// @delete product - [DELETE] /products/:productId
-export const deleteProduct = (req, res) => {
-    let product = req.product;
-    product.remove((err, deleteProduct) => {
+// [DELETE] /category/:categoryId
+export const deleteCategory = (req, res) => {
+    let category = req.category;
+    category.remove((err, deleteCategory) => {
         if (err) {
             return res.status(400).json({
                 error: "khong xoa dc san pham"
             })
         }
-        res.json({ deleteProduct, message: "xoa san pham thanh cong" })
+        res.json({ deleteProduct: deleteCategory, message: "xoa category thanh cong" })
     })
 }

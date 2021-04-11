@@ -1,14 +1,21 @@
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
+import expressValidator from 'express-validator';
 import mongoose from 'mongoose';
 import morgan from 'morgan';
 import router from './routes/';
-import bodyParser from 'body-parser';
 
+// create instance app & middleware
 const app = express();
 dotenv.config();
 app.use(bodyParser.json());
 app.use(morgan('dev'));
+app.use(cookieParser());
+app.use(expressValidator());
+app.use(cors());
 
 // connection mongo DB
 mongoose.connect(process.env.MONGODB_URI, {
@@ -17,7 +24,7 @@ mongoose.connect(process.env.MONGODB_URI, {
     useFindAndModify: false,
     useCreateIndex: true
 }).then(() => console.log('connected'))
-.catch(err => console.log('error',err));
+    .catch(err => console.log('error', err));
 
 mongoose.connection.on('error', (err) => {
     console.log(`error ${err.message}`)
