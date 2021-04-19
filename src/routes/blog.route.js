@@ -1,18 +1,18 @@
 import express from 'express';
-import { createProduct, deleteProduct, getListProduct, getOneProduct, productById, updateProduct } from '../app/controllers/product.controller';
+import { createBlog, deleteBlog, getListBlog, getOneBlog, blogId, updateBlog } from '../app/controllers/blog.controller';
 
 const routerBlog = express.Router();
 
-routerBlog.param('blogId', productById);
+routerBlog.param('blogId', blogId);
 
-routerBlog.get('/', getListProduct);
+routerBlog.get('/', getListBlog);
 
-routerBlog.get('/:blogId', getOneProduct);
+routerBlog.get('/:blogId', getOneBlog);
 
-routerBlog.post('/', createProduct);
+routerBlog.post('/', createBlog);
 
-routerBlog.delete('/:blogId', deleteProduct);
+routerBlog.delete('/:blogId', deleteBlog);
 
-routerBlog.put('/:blogId', updateProduct);
+routerBlog.put('/:blogId', updateBlog);
 
 module.exports = routerBlog;

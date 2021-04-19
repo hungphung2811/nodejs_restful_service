@@ -1,5 +1,5 @@
 import express from 'express';
-import { requireSignin, isAuth, userById, isAdmin, readUser, updateUser } from '../app/controllers/user.controller';
+import { requireSignin, isAuth, userById, isAdmin, readUser, updateUser, getAllUsers } from '../app/controllers/user.controller';
 
 const routerUser = express.Router();
 
@@ -10,7 +10,7 @@ routerUser.get('/check/:userId', requireSignin, isAuth, isAdmin, (req, res) => {
         user: req.profile
     })
 });
-
+routerUser.get('/', getAllUsers);
 routerUser.get('/:userId', requireSignin, isAuth, readUser);
 routerUser.put('/:userId', requireSignin, isAuth, updateUser);
 

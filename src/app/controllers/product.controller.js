@@ -18,42 +18,16 @@ export const productById = (req, res, next, id) => {
 
 // @create product [POST] /products
 export const createProduct = (req, res) => {
-    let form = new formidable.IncomingForm();
-    form.keepExtensions = true;
-    form.parse(req, (err, filds, files) => {
+    // required: name, image,price,quantity, instock,decription,categoryId
+    const product = new Product(a)
+    product.save((err, data) => {
         if (err) {
             return res.status(400).json({
-                error: "them san pham khong thanh cong"
+                error: "khoong them dc san pham"
             })
         }
-
-        const { name, description, price,categoryId } = filds;
-        if (!name || !description || !price||!categoryId) {
-            return res.status(400).json({
-                error: "Bạn cần nhập đầy đủ các trường"
-            })
-        }
-
-        const product = new Product(filds);
-        if (files.photo) {
-            if (files.photo.size > 1000000) {
-                return res.status(400).json({
-                    error: "Bạn nên upload ảnh dưới 1mb"
-                })
-            }
-            product.photo.data = fs.readFileSync(files.photo.path);
-            product.photo.contentType = files.photo.type;
-        }
-        
-        product.save((err, data) => {
-            if (err) {
-                return res.status(400).json({
-                    error: "khoong them dc san pham"
-                })
-            }
-            res.json(data)
-        })
-    });
+        res.json(data)
+    })
 }
 
 // @getAll products - [GET] /products
@@ -70,46 +44,23 @@ export const getListProduct = (req, res) => {
 
 // @getOne product - [GET] /products/:productId
 export const getOneProduct = (req, res) => {
-    return res.json(req.product);
+    return res.json(req.boa);
 }
 
 // @update product - [UPDATE] /products/:productId
 export const updateProduct = (req, res) => {
-    let form = new formidable.IncomingForm();
-    form.keepExtensions = true;
-    form.parse(req, (err, filds, files) => {
+
+    let product = req.product;
+    product = _.assignIn(product, { ...req.body })
+
+    product.save((err, data) => {
         if (err) {
             return res.status(400).json({
-                error: "sua san pham khong thanh cong"
+                error: "khoong them dc san pham"
             })
         }
-        const { name, description, price } = filds;
-        if (!name || !description || !price) {
-            return res.status(400).json({
-                error: "Bạn cần nhập đầy đủ các trường"
-            })
-        }
-
-        let product = req.product;
-        product= _.assignIn(product,filds)
-        if (files.photo) {
-            if (files.photo.size > 1000000) {
-                return res.status(400).json({
-                    error: "Bạn nên upload ảnh dưới 1mb"
-                })
-            }
-            product.photo.data = fs.readFileSync(files.photo.path);
-            product.photo.contentType = files.photo.type;
-        }
-        product.save((err, data) => {
-            if (err) {
-                return res.status(400).json({
-                    error: "khoong them dc san pham"
-                })
-            }
-            res.json(data)
-        })
-    });
+        res.json(data)
+    })
 }
 
 // @delete product - [DELETE] /products/:productId

@@ -14,6 +14,17 @@ export const userById = (req, res, next, id) => {
     })
 }
 
+export const getAllUsers = (req, res) => {
+    UserModel.find((err, data) => {
+        if (err) {
+            return res.json({
+                error: "khong tim tahy user"
+            })
+        }
+        res.json(data)
+    })
+}
+
 exports.requireSignin = expressJwt({
     secret: process.env.JWT_SECRET,
     algorithms: ["HS256"],
@@ -47,14 +58,14 @@ export const readUser = (req, res) => {
 }
 
 export const updateUser = (req, res) => {
-    User.findOneAndUpdate(
+    UserModel.findOneAndUpdate(
         { _id: req.profile.id },
         { $set: req.body },
         { new: true },
         (err, user) => {
             if (err) {
                 return res.status(400).json({
-                    error: 'You are not authorized to perform in action'
+                    error: 'khong co tuoi execute'
                 })
             }
             req.profile.hashed_password = undefined;

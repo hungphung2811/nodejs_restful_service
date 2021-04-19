@@ -3,46 +3,56 @@ import mongoose from 'mongoose';
 const { ObjectId } = mongoose.Schema;
 
 const productSchema = new mongoose.Schema({
-    // id: ObjectId,
     name: {
         type: String,
         trim: true,
         required: true,
         maxLength: 32
     },
-    photo: {
-        data: Buffer,
-        contentType: String
+    image: {
+        type: String,
+        trim: true,
+        require: true
     },
     price: {
         type: Number,
-        required: true,
         trim: true,
-        maxLength: 32
+        require: true,
+        maxlength: 32
     },
-    sale:{
-        type:Number,
-        trim:true,
-        default: 0
-    },
-    status:{
-        type:Boolean,
-        default: true
-    },
-    quantity: {
+    sale: {
         type: Number,
-        trim: true
+        trim: true,
+        default: 0,
+    },
+    status: {
+        type: Boolean,
+        default: true,
+    }, quantity: {
+        type: Number,
+        trim: true,
+        require:true
+    },
+    instock: {
+        type: Number,
+        trim: true,
+        require:true
     },
     description: {
         type: String,
-        required: true,
         trim: true,
-        maxLength: 2000
+        maxlength: 2000,
+        require:true
+    },
+    view: {
+        type: Number,
+        trim: true,
+        default: 0
     },
     categoryId: {
         type: ObjectId,
-        required: true,
-        ref: 'Category'
+        ref: 'Category',
+        require: true
     }
 }, { timestamps: true })
 
