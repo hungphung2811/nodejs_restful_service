@@ -4,17 +4,16 @@ import mongoose from 'mongoose';
 
 const categorySchema = new mongoose.Schema({
     // id: ObjectId,
-    name: {
+    cateName: {
         type: String,
         trim: true,
         required: true,
         maxLength: 50
     },
-    photo: {
-        data: Buffer,
-        contentType: String
+    image: {
+        type: String
     },
-    description: {
+    short_desc: {
         type: String,
         trim: true,
         required: true,
