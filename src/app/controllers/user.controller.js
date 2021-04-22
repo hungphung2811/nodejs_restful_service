@@ -1,4 +1,3 @@
-import expressJwt from 'express-jwt';
 import UserModel from '../models/user.model';
 require('dotenv').config();
 
@@ -25,30 +24,6 @@ export const getAllUsers = (req, res) => {
     })
 }
 
-exports.requireSignin = expressJwt({
-    secret: process.env.JWT_SECRET,
-    algorithms: ["HS256"],
-    userProperty: "auth",
-});
-
-export const isAuth = (req, res, next) => {
-    let user = req.profile && req.auth && req.profile._id == req.auth._id;
-    if (!user) {
-        return res.status(403).json({
-            error: "Access Denied"
-        })
-    }
-    next();
-}
-
-export const isAdmin = (req, res, next) => {
-    if (req.profile.role == 0) {
-        return res.status(403).json({
-            error: "Admin resource! Access Denined"
-        })
-    }
-    next();
-}
 
 export const readUser = (req, res) => {
     req.profile.hashed_password = undefined;

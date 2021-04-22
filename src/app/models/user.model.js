@@ -15,6 +15,10 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    avatar:{
+        type:String,
+        default:"https://firebasestorage.googleapis.com/v0/b/save-image-b463c.appspot.com/o/image-customer%2Fuser.png?alt=media&token=e8df3c9e-4d06-4425-9f72-5bc66ee26a1a"
+    },
     hashed_password: {
         type: String,
         required: true,

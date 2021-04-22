@@ -1,24 +1,26 @@
 export const userSignupValidator = (req, res, next) => {
-    req.check('name', 'Name is required').notEmpty();
-    req.check('email', 'Email must be between 3 to 32')
+    req.check('name', { errorName: 'Name is required' }).notEmpty();
+    req.check('email', { errorEmail: 'Email must be between 3 to 32' })
         .matches(/.+\@.+\..+/)
-        .withMessage('Email must contains @')
+        .withMessage({ errorEmail: 'Email must contains @' })
         .isLength({
             min: 4,
             max: 32
         });
-    req.check('password', 'Password is required').notEmpty()
+    req.check('password', { errorPassword: 'Password is required' }).notEmpty()
     req.check('password')
         .isLength(
             { min: 6 }
         )
-        .withMessage('Password must contain at least 6 characters')
+        .withMessage({ errorPassword: 'Password must contain at least 6 characters' })
         .matches(/\d/)
-        .withMessage('Password must contain a number');
+        .withMessage({ errorPassword: 'Password must contain a number' });
 
     const errors = req.validationErrors()
     if (errors) {
-        const firstError = errors.map(error => error.msg)[0]
+        const firstError = errors.map(error => {
+            return error.msg
+        })[0]
         return res.status(400).json({ error: firstError })
     }
     next();
