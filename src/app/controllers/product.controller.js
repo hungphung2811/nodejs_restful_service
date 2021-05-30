@@ -34,7 +34,7 @@ export const createProduct = (req, res) => {
 export const getListProduct = (req, res) => {
     let order = req.query._order ? req.query._order : 'asc';
     let sortBy = req.query._sort ? req.query._sort : '_id';
-    let limit = req.query._limit ? +req.query._limit : 6;
+    let limit = req.query._limit ? +req.query._limit :6;
 
     if (req.query.categoryId) {
         Product.find({ categoryId: req.query.categoryId })

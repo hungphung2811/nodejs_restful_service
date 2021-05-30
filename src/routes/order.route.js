@@ -1,8 +1,15 @@
 import express from 'express';
-import { getAllOrders} from '../app/controllers/order.controller';
+import {
+    createOrder,
+    getAllOrders,
+    getOneOrder,
+    orderId
+} from '../app/controllers/order.controller';
 
 const routerOrder = express.Router();
-
-routerOrder.get('/', getAllOrders)
+routerOrder.param('orderId',orderId);
+routerOrder.get('/', getAllOrders);
+routerOrder.get('/:orderId', getOneOrder);
+routerOrder.post('/', createOrder);
 
 module.exports = routerOrder;
