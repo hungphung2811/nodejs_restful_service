@@ -75,8 +75,8 @@ export const checkEmail = (req, res, next) => {
         if (data) {
             return res.status(400).json({ error: { errorEmail: "email da duoc su dung" } })
         }
+        next();
     });
-    next();
 }
 
 export const isToken = (req, res, next) => {

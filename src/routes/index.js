@@ -3,10 +3,12 @@ import routerCategory from './category.route';
 import routerAuth from './auth.route';
 import routerUser from './user.route';
 import routerOrder from './order.route';
+import routerOrderDetail from './orderDetail.route';
 import routerBlog from './blog.route';
 
 function router(app) {
     app.use('/api/order', routerOrder);
+    app.use('/api/order-detail', routerOrderDetail);
     app.use('/api/users', routerUser);
     app.use('/api/blogs', routerBlog);
     app.use('/api/category', routerCategory);

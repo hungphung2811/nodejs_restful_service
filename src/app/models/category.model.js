@@ -16,7 +16,7 @@ const categorySchema = new mongoose.Schema({
     short_desc: {
         type: String,
         trim: true,
-        required: true,
+        required: false,
         maxLength: 2000
     }
 }, {

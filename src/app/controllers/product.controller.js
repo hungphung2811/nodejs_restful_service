@@ -19,7 +19,12 @@ export const productById = (req, res, next, id) => {
 // @create product [POST] /products
 export const createProduct = (req, res) => {
     // required: name, image,price,quantity, instock,decription,categoryId
-    const product = new Product(req.body)
+    let product;
+    if (!req.body.instock) {
+        product = new Product({ ...req.body, instock: req.body.quantity })
+    } else {
+        product = new Product(req.body)
+    }
     product.save((err, data) => {
         if (err) {
             return res.status(400).json({
@@ -34,7 +39,7 @@ export const createProduct = (req, res) => {
 export const getListProduct = (req, res) => {
     let order = req.query._order ? req.query._order : 'asc';
     let sortBy = req.query._sort ? req.query._sort : '_id';
-    let limit = req.query._limit ? +req.query._limit :6;
+    let limit = req.query._limit ? +req.query._limit : 6;
 
     if (req.query.categoryId) {
         Product.find({ categoryId: req.query.categoryId })

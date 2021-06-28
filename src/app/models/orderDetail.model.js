@@ -1,32 +1,29 @@
 import mongoose from 'mongoose';
 const { ObjectId } = mongoose.Schema;
-const orderSchema = new mongoose.Schema({
+const orderDetailSchema = new mongoose.Schema({
     name: {
         type: String,
         trim: true,
         require: true,
         maxlength: 32
     },
-    phone: {
-        type: String,
+    price: {
+        type: Number,
         trim: true,
-        require: true,
         length: 10,
     },
-    address: {
-        type: String,
-        require: true,
+    amount: {
+        type: Number,
         trim: true,
-        maxlength: 200
     },
-    userId: {
+    oderId: {
         type: ObjectId,
-        ref: 'User',
+        ref: 'Order',
         require: false
     }
 }, {
     timestamps: true,
-    collection: 'orders'
+    collection: 'orders_detail'
 })
 
-module.exports = mongoose.model('Order', orderSchema);
+module.exports = mongoose.model('OrderDetail', orderDetailSchema);

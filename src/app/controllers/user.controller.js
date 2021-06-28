@@ -32,6 +32,10 @@ export const readUser = (req, res) => {
     return res.json(req.profile);
 }
 
+export const getOne = (req,res)=>{
+    return res.json(req.profile);
+}
+
 export const updateUser = (req, res) => {
     UserModel.findOneAndUpdate(
         { _id: req.profile.id },

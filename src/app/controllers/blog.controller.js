@@ -6,7 +6,7 @@ import _ from "lodash";
 // /:id => id
 export const blogId = (req, res, next, id) => {
     BlogModel.findById(id).exec((err, blog) => {
-        if (err || !category) {
+        if (err || !blog) {
             return res.status(400).json(
                 { error: "khong tim thay blog nao" }
             )

@@ -22,6 +22,7 @@ export const createCategory = (req, res) => {
     const category = new Category(req.body)
     category.save((err, data) => {
         if (err) {
+            console.log(err);
             return res.status(400).json({
                 error: "khoong them dc category"
             })
@@ -34,7 +35,7 @@ export const createCategory = (req, res) => {
 export const getListCategory = (req, res) => {
     let order = req.query._order ? req.query._order : 'asc';
     let sortBy = req.query._sort ? req.query._sort : '_id';
-    let limit = req.query._limit ? +req.query._limit : 3;
+    let limit = req.query._limit ? +req.query._limit : 10;
     Category.find({})
         .limit(limit)
         .sort([[sortBy, order]])
